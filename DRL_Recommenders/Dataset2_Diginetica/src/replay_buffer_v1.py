@@ -9,7 +9,7 @@ FLAGS = flags.FLAGS
 flags.DEFINE_integer("history_length", 10, "uniform history length")
 
 if __name__ == "__main__":
-    data_directory = "/Users/kashafali/Documents/Duke/Spring23/RL/Deep_Reinforcement_Learning_Recommenders/DRL_Recommenders/Dataset2_Diginetica/Data"
+    data_directory = "Data"
 
     length = FLAGS.history_length
 
