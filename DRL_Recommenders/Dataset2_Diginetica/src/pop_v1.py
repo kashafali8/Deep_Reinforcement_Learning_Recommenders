@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # Network parameters
     args = parse_args()
 
-    data_directory = args.data
+    data_directory = args.Data
     replay_buffer_behavior = pd.read_pickle(
         os.path.join(data_directory, "sorted_events.df")
     )
