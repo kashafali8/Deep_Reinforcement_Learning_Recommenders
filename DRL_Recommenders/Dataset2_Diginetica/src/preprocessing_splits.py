@@ -56,7 +56,7 @@ events["session_id"] = session_encoder.fit_transform(events.session_id)
 sorted_events = events.sort_values(by=["session_id", "timestamp"])
 
 # Save processed data v_01 to pickle (optional)
-# sorted_events.to_pickle(os.path.join(data_dir, 'Diginetica_processed_01.df'))
+sorted_events.to_pickle(os.path.join(data_dir, 'sorted_events.df'))
 
 total_sessions = sorted_events.session_id.unique()
 np.random.shuffle(total_sessions)
