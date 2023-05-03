@@ -319,9 +319,13 @@ class QNetwork:
             )
             self.phi2 = tf.matmul(self.states_hidden, self.w_f, transpose_b=True)
 
+            print("phi 2 SHAPE: ", self.phi2.get_shape())
+
             self.final_score = (
                 1 - self.lambda_score
             ) * self.phi + self.lambda_score * self.phi2
+
+            print("final score SHAPE: ", self.final_score.get_shape())
 
             ####### MODIFIED CODE FOR ITEM FEATURES - END #######
 
@@ -373,9 +377,14 @@ class QNetwork:
                 labels=self.actions, logits=self.final_score
             )
 
+            print("ce_loss SHAPE: ", self.ce_loss.get_shape())
+
             self.loss = tf.reduce_mean(
                 self.weight * (qloss_positive + qloss_negative) + ce_loss
             )
+
+            print("loss SHAPE: ", self.loss.get_shape())
+
             self.opt = tf.compat.v1.train.AdamOptimizer(learning_rate).minimize(
                 self.loss
             )
