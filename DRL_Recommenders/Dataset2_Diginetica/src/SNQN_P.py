@@ -131,15 +131,20 @@ class QNetwork:
             )  ## modified for item features
 
             data_sorted = "Data"
-            sorted_events = pd.read_pickle(
-                os.path.join(data_sorted, "sorted_events.df")
+            one_hot_encoded = pd.read_pickle(
+                os.path.join(data_sorted, "one_hot_encoded.df")
             )
-            one_hot_encoded, itemids = create_feature_matrix(
-                sorted_events,
-                n_files=2,
-                path_name="src/item_features/",
-                one_hot_encode=True,
-            )
+
+            one_hot_encoded = tf.convert_to_tensor(one_hot_encoded)
+            # sorted_events = pd.read_pickle(
+            #     os.path.join(data_sorted, "sorted_events.df")
+            # )
+            # one_hot_encoded, itemids = create_feature_matrix(
+            #     sorted_events,
+            #     n_files=2,
+            #     path_name="src/item_features/",
+            #     one_hot_encode=True,
+            # )
 
             if self.model == "GRU":
                 gru_out, self.states_hidden = tf.compat.v1.nn.dynamic_rnn(
