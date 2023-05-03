@@ -120,14 +120,14 @@ class QNetwork:
                 tf.int32, [None]
             )  # the length of valid positions, because short sesssions need to be padded
 
-            # one_hot_input = tf.one_hot(self.inputs, self.item_num+1)
+            one_hot_input = tf.one_hot(self.inputs, self.item_num + 1)
             self.input_emb = tf.nn.embedding_lookup(
                 params=self.all_embeddings["state_embeddings"], ids=self.inputs
             )
 
-            self.feature_vector = tf.reduce_mean(
-                self.input_emb, axis=1
-            )  ## modified for item features
+            # self.feature_vector = tf.reduce_mean(
+            #     self.input_emb, axis=1
+            # )  ## modified for item features
 
             if self.model == "GRU":
                 gru_out, self.states_hidden = tf.compat.v1.nn.dynamic_rnn(
@@ -326,7 +326,7 @@ class QNetwork:
             # )
 
             self.w_f = tf.compat.v1.layers.dense(
-                self.feature_vector,
+                one_hot_input,
                 self.hidden_size,
                 use_bias=True,
                 activation=None,
