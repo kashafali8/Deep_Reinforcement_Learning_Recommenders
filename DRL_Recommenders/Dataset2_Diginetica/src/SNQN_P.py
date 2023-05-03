@@ -125,6 +125,10 @@ class QNetwork:
                 params=self.all_embeddings["state_embeddings"], ids=self.inputs
             )
 
+            self.feature_vector = tf.reduce_mean(
+                self.input_emb, axis=1
+            )  ## modified for item features
+
             if self.model == "GRU":
                 gru_out, self.states_hidden = tf.compat.v1.nn.dynamic_rnn(
                     tf.compat.v1.nn.rnn_cell.GRUCell(self.hidden_size),
@@ -140,10 +144,6 @@ class QNetwork:
 
                 self.input_emb *= mask
                 self.embedded_chars_expanded = tf.expand_dims(self.input_emb, -1)
-
-                self.feature_vector = tf.reduce_mean(
-                    self.input_emb, axis=1
-                )  ## modified for item features
 
                 # Create a convolution + maxpool layer for each filter size
                 pooled_outputs = []
