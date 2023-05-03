@@ -1,6 +1,6 @@
 import tensorflow as tf
 import math
-from utility_v2 import *
+from utility import *
 
 # config e.g. dilations: [1,4,16,] In most cases[1,4,] is enough
 def nextitnet_residual_block(input_, dilation, layer_id,

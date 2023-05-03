@@ -9,7 +9,7 @@ https://www.github.com/kyubyong/transformer
 from __future__ import print_function
 import tensorflow as tf
 import numpy as np
-from utility_v2 import normalize
+from utility import normalize
 
 
 
