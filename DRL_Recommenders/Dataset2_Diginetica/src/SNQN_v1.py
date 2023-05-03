@@ -403,8 +403,8 @@ def evaluate(sess):
     while evaluated < len(eval_ids):
         states, len_states, actions, rewards = [], [], [], []
         for i in range(batch):
-            # if evaluated == len(eval_ids): # changed ---
-            # break
+            if evaluated == len(eval_ids):  # changed ---
+                break
             id = eval_ids[evaluated]
             group = groups.get_group(id)
             history = []
@@ -510,7 +510,7 @@ if __name__ == "__main__":
     with tf.compat.v1.Session() as sess:
         # Initialize variables
         sess.run(tf.compat.v1.global_variables_initializer())
-        evaluate(sess)  # changed ----
+        # evaluate(sess)  # changed ----
         num_rows = replay_buffer.shape[0]
         num_batches = int(num_rows / args.batch_size)
         for i in range(args.epoch):
@@ -603,16 +603,8 @@ if __name__ == "__main__":
                         mainQN.is_training: True,
                     },
                 )
-                # total_step += 1
-                # if total_step % 200 == 0:
-                #     print("the loss in %dth batch is: %f" % (total_step, loss))
-                # if total_step % 4000 == 0:
-                #     evaluate(sess)
                 total_step += 1
-                if total_step % 100 == 0:
-                    print(f"Training on {total_step} completed.")
-                if j == (num_batches - 1):
-                    print(f"Epoch {epoch+1} training completed.")
-                    print(f"The loss after epoch {epoch+1} is: {loss}")
-                # if total_step % args.eval_freq == 0:
-        evaluate(sess, datatype="test")
+                if total_step % 200 == 0:
+                    print("the loss in %dth batch is: %f" % (total_step, loss))
+                if total_step % 4000 == 0:
+                    evaluate(sess)

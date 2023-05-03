@@ -1,18 +1,12 @@
-# -*- coding: utf-8 -*-
-"""
-Nov 2021 by XinXin. 
-xinxin@sdu.edu.cn.
-https://arxiv.org/pdf/2111.03474.pdf
-"""
 import tensorflow as tf
 import numpy as np
 import pandas as pd
 import os
 import argparse
 from collections import deque
-from utility_v2 import pad_history, calculate_hit
-from NextItNetModules_v2 import *
-from SASRecModules_v2 import *
+from utility import pad_history, calculate_hit
+from NextItNetModules import *
+from SASRecModules import *
 
 import trfl
 from trfl import indexing_ops
@@ -33,17 +27,11 @@ print(tf.test.gpu_device_name())
 def parse_args():
     parser = argparse.ArgumentParser(description="Run nive double q learning.")
 
-    parser.add_argument("--epoch", type=int, default=100, help="Number of max epochs.")
-    parser.add_argument("--data", nargs="?", default="HM_data", help="data directory")
+    parser.add_argument("--epoch", type=int, default=50, help="Number of max epochs.")
+    parser.add_argument("--data", nargs="?", default="data", help="data directory")
     # parser.add_argument('--pretrain', type=int, default=1,
     #                     help='flag for pretrain. 1: initialize from pretrain; 0: randomly initialize; -1: save the model to pretrain file')
     parser.add_argument("--batch_size", type=int, default=256, help="Batch size.")
-    parser.add_argument(
-        "--eval_freq", type=int, default=8000, help="Evaluation frequency."
-    )
-    parser.add_argument(
-        "--eval_batch_size", type=int, default=30, help="Eval batch size."
-    )
     parser.add_argument(
         "--hidden_factor",
         type=int,
@@ -51,10 +39,10 @@ def parse_args():
         help="Number of hidden factors, i.e., embedding size.",
     )
     parser.add_argument(
-        "--r_click", type=float, default=1.0, help="reward for the click behavior."
+        "--r_click", type=float, default=0.2, help="reward for the click behavior."
     )
     parser.add_argument(
-        "--r_buy", type=float, default=3.0, help="reward for the purchase behavior."
+        "--r_buy", type=float, default=1.0, help="reward for the purchase behavior."
     )
     parser.add_argument(
         "--r_negative",
@@ -64,7 +52,7 @@ def parse_args():
     )
     parser.add_argument("--lr", type=float, default=0.01, help="Learning rate.")
     parser.add_argument(
-        "--discount", type=float, default=0.2, help="Discount factor for RL."
+        "--discount", type=float, default=0.5, help="Discount factor for RL."
     )
     parser.add_argument(
         "--neg", type=int, default=10, help="number of negative samples."
@@ -134,12 +122,12 @@ class QNetwork:
 
             # one_hot_input = tf.one_hot(self.inputs, self.item_num+1)
             self.input_emb = tf.nn.embedding_lookup(
-                params=self.all_embeddings["state_embeddings"], ids=self.inputs
+                self.all_embeddings["state_embeddings"], self.inputs
             )
 
             if self.model == "GRU":
                 gru_out, self.states_hidden = tf.compat.v1.nn.dynamic_rnn(
-                    tf.contrib.rnn.GRUCell(self.hidden_size),
+                    tf.compat.v1.nn.rnn_cell.GRUCell(self.hidden_size),
                     self.input_emb,
                     dtype=tf.float32,
                     sequence_length=self.len_state,
@@ -147,7 +135,7 @@ class QNetwork:
 
             if self.model == "Caser":
                 mask = tf.expand_dims(
-                    tf.compat.v1.to_float(tf.not_equal(self.inputs, item_num)), -1
+                    tf.cast(tf.not_equal(self.inputs, item_num), dtype=tf.float32), -1
                 )
 
                 self.input_emb *= mask
@@ -158,7 +146,7 @@ class QNetwork:
                 num_filters = args.num_filters
                 filter_sizes = eval(args.filter_sizes)
                 for i, filter_size in enumerate(filter_sizes):
-                    with tf.name_scope("conv-maxpool-%s" % filter_size):
+                    with tf.compat.v1.name_scope("conv-maxpool-%s" % filter_size):
                         # Convolution Layer
                         filter_shape = [filter_size, self.hidden_size, 1, num_filters]
                         W = tf.Variable(
@@ -169,7 +157,7 @@ class QNetwork:
 
                         conv = tf.nn.conv2d(
                             self.embedded_chars_expanded,
-                            W,
+                            filters=W,
                             strides=[1, 1, 1, 1],
                             padding="VALID",
                             name="conv",
@@ -179,8 +167,8 @@ class QNetwork:
                         # Maxpooling over the outputs
                         # new shape after max_pool[?, 1, 1, num_filters]
                         # be carefyul, the  new_sequence_length has changed because of wholesession[:, 0:-1]
-                        pooled = tf.nn.max_pool(
-                            h,
+                        pooled = tf.nn.max_pool2d(
+                            input=h,
                             ksize=[1, state_size - filter_size + 1, 1, 1],
                             strides=[1, 1, 1, 1],
                             padding="VALID",
@@ -195,7 +183,7 @@ class QNetwork:
                     self.h_pool, [-1, num_filters_total]
                 )  # shape=[batch_size, 384]
                 # design the veritcal cnn
-                with tf.name_scope("conv-verical"):
+                with tf.compat.v1.name_scope("conv-verical"):
                     filter_shape = [self.state_size, 1, 1, 1]
                     W = tf.Variable(
                         tf.random.truncated_normal(filter_shape, stddev=0.1), name="W"
@@ -203,7 +191,7 @@ class QNetwork:
                     b = tf.Variable(tf.constant(0.1, shape=[1]), name="b")
                     conv = tf.nn.conv2d(
                         self.embedded_chars_expanded,
-                        W,
+                        filters=W,
                         strides=[1, 1, 1, 1],
                         padding="VALID",
                         name="conv",
@@ -215,15 +203,15 @@ class QNetwork:
                 )  # shape=[batch_size, 384+100]
 
                 # Add dropout
-                with tf.name_scope("dropout"):
+                with tf.compat.v1.name_scope("dropout"):
                     self.states_hidden = tf.compat.v1.layers.dropout(
                         self.final,
                         rate=args.dropout_rate,
-                        training=tf.convert_to_tensor(value=self.is_training),
+                        training=tf.convert_to_tensor(self.is_training),
                     )
             if self.model == "NItNet":
                 mask = tf.expand_dims(
-                    tf.compat.v1.to_float(tf.not_equal(self.inputs, item_num)), -1
+                    tf.cast(tf.not_equal(self.inputs, item_num), dtype=tf.float32), -1
                 )
 
                 # self.input_emb=tf.nn.embedding_lookup(all_embeddings['state_embeddings'],self.inputs)
@@ -241,7 +229,7 @@ class QNetwork:
                 }
 
                 context_embedding = tf.nn.embedding_lookup(
-                    params=self.all_embeddings["state_embeddings"], ids=self.inputs
+                    self.all_embeddings["state_embeddings"], self.inputs
                 )
                 context_embedding *= mask
 
@@ -262,22 +250,22 @@ class QNetwork:
 
             if self.model == "SASRec":
                 pos_emb = tf.nn.embedding_lookup(
-                    params=self.all_embeddings["pos_embeddings"],
-                    ids=tf.tile(
-                        tf.expand_dims(tf.range(tf.shape(input=self.inputs)[1]), 0),
-                        [tf.shape(input=self.inputs)[0], 1],
+                    self.all_embeddings["pos_embeddings"],
+                    tf.tile(
+                        tf.expand_dims(tf.range(tf.shape(self.inputs)[1]), 0),
+                        [tf.shape(self.inputs)[0], 1],
                     ),
                 )
                 self.seq = self.input_emb + pos_emb
 
                 mask = tf.expand_dims(
-                    tf.compat.v1.to_float(tf.not_equal(self.inputs, item_num)), -1
+                    tf.cast(tf.not_equal(self.inputs, item_num), dtype=tf.float32), -1
                 )
                 # Dropout
                 self.seq = tf.compat.v1.layers.dropout(
                     self.seq,
                     rate=args.dropout_rate,
-                    training=tf.convert_to_tensor(value=self.is_training),
+                    training=tf.convert_to_tensor(self.is_training),
                 )
                 self.seq *= mask
 
@@ -316,6 +304,20 @@ class QNetwork:
             self.output2 = tf.compat.v1.layers.dense(
                 self.states_hidden, self.item_num, activation=None
             )  # all ce logits
+
+            # item features
+
+            print("OUTPUT 2 SHAPE: ", self.output2.get_shape())
+            self.phi = self.output2
+
+            self.w_f = tf.compat.v1.layers.dense(
+                self.inputs, self.hidden_size, use_bias=True, activation=None
+            )
+            self.phi2 = tf.matmul(self.states_hidden, self.w_f, transpose_b=True)
+
+            self.final_score = (
+                1 - self.lambda_score
+            ) * self.phi + self.lambda_score * self.phi2
 
             # TRFL way
             self.actions = tf.compat.v1.placeholder(tf.int32, [None])
@@ -362,11 +364,11 @@ class QNetwork:
                 )[0]
 
             ce_loss = tf.nn.sparse_softmax_cross_entropy_with_logits(
-                labels=self.actions, logits=self.output2
+                labels=self.actions, logits=self.final_score
             )
 
             self.loss = tf.reduce_mean(
-                input_tensor=self.weight * (qloss_positive + qloss_negative) + ce_loss
+                self.weight * (qloss_positive + qloss_negative) + ce_loss
             )
             self.opt = tf.compat.v1.train.AdamOptimizer(learning_rate).minimize(
                 self.loss
@@ -399,13 +401,8 @@ class QNetwork:
         return all_embeddings
 
 
-def evaluate(sess, datatype="val"):
-    batch = eval_batch_size
-    print(f"\nStart evaluation with batch size {batch}")
-    if datatype == "test":
-        eval_sessions = pd.read_pickle(os.path.join(data_directory, "sampled_test.df"))
-    else:
-        eval_sessions = pd.read_pickle(os.path.join(data_directory, "sampled_val.df"))
+def evaluate(sess):
+    eval_sessions = pd.read_pickle(os.path.join(data_directory, "sampled_val.df"))
     eval_ids = eval_sessions.session_id.unique()
     groups = eval_sessions.groupby("session_id")
     batch = 100
@@ -417,38 +414,36 @@ def evaluate(sess, datatype="val"):
     ndcg_clicks = [0, 0, 0, 0]
     hit_purchase = [0, 0, 0, 0]
     ndcg_purchase = [0, 0, 0, 0]
-
     while evaluated < len(eval_ids):
         states, len_states, actions, rewards = [], [], [], []
         for i in range(batch):
-            if evaluated < len(eval_ids):
-                id = eval_ids[evaluated]
-                group = groups.get_group(id)
-                history = []
-                for index, row in group.iterrows():
-                    state = list(history)
-                    len_states.append(
-                        state_size
-                        if len(state) >= state_size
-                        else 1
-                        if len(state) == 0
-                        else len(state)
-                    )
-                    state = pad_history(state, state_size, item_num)
-                    states.append(state)
-                    action = row["item_id"]
-                    is_buy = row["is_buy"]
-                    reward = reward_buy if is_buy == 1 else reward_click
-                    if is_buy == 1:
-                        total_purchase += 1.0
-                    else:
-                        total_clicks += 1.0
-                    actions.append(action)
-                    rewards.append(reward)
-                    history.append(row["item_id"])
-                evaluated += 1
-            else:
+            if evaluated == len(eval_ids):  # changed ---
                 break
+            id = eval_ids[evaluated]
+            group = groups.get_group(id)
+            history = []
+            for index, row in group.iterrows():
+                state = list(history)
+                len_states.append(
+                    state_size
+                    if len(state) >= state_size
+                    else 1
+                    if len(state) == 0
+                    else len(state)
+                )
+                state = pad_history(state, state_size, item_num)
+                states.append(state)
+                action = row["item_id"]
+                is_buy = row["is_buy"]
+                reward = reward_buy if is_buy == 1 else reward_click
+                if is_buy == 1:
+                    total_purchase += 1.0
+                else:
+                    total_clicks += 1.0
+                actions.append(action)
+                rewards.append(reward)
+                history.append(row["item_id"])
+            evaluated += 1
         prediction = sess.run(
             QN_1.output1,
             feed_dict={
@@ -473,13 +468,13 @@ def evaluate(sess, datatype="val"):
     print("#############################################################")
     print("total clicks: %d, total purchase:%d" % (total_clicks, total_purchase))
     for i in range(len(topk)):
-        # hr_click=hit_clicks[i]/total_clicks
+        hr_click = hit_clicks[i] / total_clicks
         hr_purchase = hit_purchase[i] / total_purchase
-        # ng_click=ndcg_clicks[i]/total_clicks
+        ng_click = ndcg_clicks[i] / total_clicks
         ng_purchase = ndcg_purchase[i] / total_purchase
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         print("cumulative reward @ %d: %f" % (topk[i], total_reward[i]))
-        # print('clicks hr ndcg @ %d : %f, %f' % (topk[i],hr_click,ng_click))
+        print("clicks hr ndcg @ %d : %f, %f" % (topk[i], hr_click, ng_click))
         print("purchase hr and ndcg @%d : %f, %f" % (topk[i], hr_purchase, ng_purchase))
     print("#############################################################")
 
@@ -487,9 +482,9 @@ def evaluate(sess, datatype="val"):
 if __name__ == "__main__":
     # Network parameters
     args = parse_args()
-    eval_batch_size = args.eval_batch_size
 
     data_directory = "Data"
+    # args.data
     data_statis = pd.read_pickle(
         os.path.join(data_directory, "data_statis.df")
     )  # read data statistics, includeing state_size and item_num
@@ -525,20 +520,15 @@ if __name__ == "__main__":
     replay_buffer = pd.read_pickle(os.path.join(data_directory, "replay_buffer.df"))
     # saver = tf.train.Saver()
 
+    total_step = 0
     with tf.compat.v1.Session() as sess:
         # Initialize variables
         sess.run(tf.compat.v1.global_variables_initializer())
-        # evaluate(sess)
+        # evaluate(sess)  # changed ----
         num_rows = replay_buffer.shape[0]
         num_batches = int(num_rows / args.batch_size)
-        print()
-        print("********************* Training Started *********************")
-        for epoch in range(args.epoch):
-            print()
-            print(f"Starting Epoch: {epoch+1}")
-            print(f"Number of batches: {num_batches}")
+        for i in range(args.epoch):
             for j in range(num_batches):
-                total_step = 0
                 batch = replay_buffer.sample(n=args.batch_size).to_dict()
 
                 # state = list(batch['state'].values())
@@ -628,10 +618,7 @@ if __name__ == "__main__":
                     },
                 )
                 total_step += 1
-                if total_step % 100 == 0:
-                    print(f"Training on {total_step} completed.")
-                if j == (num_batches - 1):
-                    print(f"Epoch {epoch+1} training completed.")
-                    print(f"The loss after epoch {epoch+1} is: {loss}")
-                # if total_step % args.eval_freq == 0:
-        evaluate(sess, datatype="test")
+                if total_step % 200 == 0:
+                    print("the loss in %dth batch is: %f" % (total_step, loss))
+                if total_step % 4000 == 0:
+                    evaluate(sess)
