@@ -125,9 +125,9 @@ class QNetwork:
                 params=self.all_embeddings["state_embeddings"], ids=self.inputs
             )
 
-            # self.feature_vector = tf.reduce_mean(
-            #     self.input_emb, axis=1
-            # )  ## modified for item features
+            self.feature_vector = tf.reduce_mean(
+                one_hot_input, axis=1
+            )  ## modified for item features
 
             if self.model == "GRU":
                 gru_out, self.states_hidden = tf.compat.v1.nn.dynamic_rnn(
@@ -316,6 +316,7 @@ class QNetwork:
             ####### MODIFIED CODE FOR ITEM FEATURES - START #######
 
             print("OUTPUT 2 SHAPE: ", self.output2.get_shape())
+            # (None, )
             self.phi = self.output2
 
             # self.w_f = tf.compat.v1.layers.dense(

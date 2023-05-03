@@ -56,7 +56,7 @@ events["session_id"] = session_encoder.fit_transform(events.session_id)
 sorted_events = events.sort_values(by=["session_id", "timestamp"])
 
 # Save processed data v_01 to pickle (optional)
-sorted_events.to_pickle(os.path.join(data_dir, 'sorted_events.df'))
+sorted_events.to_pickle(os.path.join(data_dir, "sorted_events.df"))
 
 total_sessions = sorted_events.session_id.unique()
 np.random.shuffle(total_sessions)
@@ -75,3 +75,11 @@ test_sessions = sorted_events[sorted_events["session_id"].isin(test_ids)]
 to_pickled_df(data_dir, sampled_train=train_sessions)
 to_pickled_df(data_dir, sampled_val=val_sessions)
 to_pickled_df(data_dir, sampled_test=test_sessions)
+
+# import item_features
+
+sorted_events = pd.read_pickle(
+    "/Volumes/GoogleDrive/My Drive/DUKE/AIPI531_DRL/Project/Data/sorted_events.df"
+)
+
+from item_features_K import create_feature_matrix
