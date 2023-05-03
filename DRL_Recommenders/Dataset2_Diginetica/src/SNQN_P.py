@@ -501,7 +501,7 @@ def evaluate(sess):
                 QN_1.is_training: False,
             },
         )
-        l_list = np.argsort(prediction)
+        sorted_list = np.argsort(prediction)
         calculate_hit(
             sorted_list,
             topk,
