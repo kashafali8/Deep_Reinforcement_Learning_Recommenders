@@ -12,6 +12,7 @@ import trfl
 from trfl import indexing_ops
 
 import warnings
+from item_features_K import create_feature_matrix
 
 warnings.filterwarnings("ignore")
 
@@ -125,9 +126,20 @@ class QNetwork:
                 params=self.all_embeddings["state_embeddings"], ids=self.inputs
             )
 
-            # self.feature_vector = tf.reduce_mean(
-            #     one_hot_input, axis=1
-            # )  ## modified for item features
+            self.feature_vector = tf.reduce_mean(
+                self.inputs, axis=1
+            )  ## modified for item features
+
+            data_sorted = "Data"
+            sorted_events = pd.read_pickle(
+                os.path.join(data_sorted, "sorted_events.df")
+            )
+            one_hot_encoded, itemids = create_feature_matrix(
+                sorted_events,
+                n_files=2,
+                path_name="src/item_features/",
+                one_hot_encode=True,
+            )
 
             if self.model == "GRU":
                 gru_out, self.states_hidden = tf.compat.v1.nn.dynamic_rnn(
@@ -326,7 +338,7 @@ class QNetwork:
             # )
 
             self.w_f = tf.compat.v1.layers.dense(
-                self.feature_vector,
+                one_hot_encoded,
                 self.hidden_size,
                 use_bias=True,
                 activation=None,
