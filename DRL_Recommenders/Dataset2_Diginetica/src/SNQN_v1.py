@@ -305,6 +305,8 @@ class QNetwork:
                 self.states_hidden, self.item_num, activation=None
             )  # all ce logits
 
+            print("OUTPUT 2 SHAPE: ", self.output2.get_shape())
+
             # TRFL way
             self.actions = tf.compat.v1.placeholder(tf.int32, [None])
 
