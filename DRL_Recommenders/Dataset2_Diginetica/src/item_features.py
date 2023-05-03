@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 def create_feature_matrix(sorted_events, n_files = 2, path_name="", one_hot_encode=True, top_features = 500):
