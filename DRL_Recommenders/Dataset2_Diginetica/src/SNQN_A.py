@@ -391,7 +391,7 @@ class QNetwork:
                 labels=self.actions, logits=self.final_score
             )
 
-            print("ce_loss SHAPE: ", self.ce_loss.get_shape())
+            print("ce_loss SHAPE: ", ce_loss.get_shape())
 
             self.loss = tf.reduce_mean(
                 self.weight * (qloss_positive + qloss_negative) + ce_loss
