@@ -126,6 +126,10 @@ class QNetwork:
                 self.all_embeddings["state_embeddings"], self.inputs
             )
 
+            self.feature_vector = tf.reduce_mean(
+                input_emb, axis=1
+            )  ## modified for item features
+
             if self.model == "GRU":
                 gru_out, self.states_hidden = tf.compat.v1.nn.dynamic_rnn(
                     tf.compat.v1.nn.rnn_cell.GRUCell(self.hidden_size),
@@ -311,12 +315,22 @@ class QNetwork:
             print("OUTPUT 2 SHAPE: ", self.output2.get_shape())
             self.phi = self.output2
 
+            # self.w_f = tf.compat.v1.layers.dense(
+            #     tf.cast(self.inputs, dtype=tf.float32),
+            #     self.hidden_size,
+            #     use_bias=True,
+            #     activation=None,
+            # )
+
             self.w_f = tf.compat.v1.layers.dense(
-                tf.cast(self.inputs, dtype=tf.float32),
+                self.feature_vector,
                 self.hidden_size,
                 use_bias=True,
                 activation=None,
             )
+
+            print("w_f SHAPE: ", self.w_f.get_shape())
+
             self.phi2 = tf.matmul(self.states_hidden, self.w_f, transpose_b=True)
 
             print("phi 2 SHAPE: ", self.phi2.get_shape())
