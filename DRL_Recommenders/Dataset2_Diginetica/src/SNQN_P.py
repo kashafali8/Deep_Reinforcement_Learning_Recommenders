@@ -351,7 +351,9 @@ class QNetwork:
 
             print("w_f SHAPE: ", self.w_f.get_shape())
 
-            self.phi2 = tf.matmul(self.states_hidden, self.w_f, transpose_b=True)
+            self.phi2 = tf.matmul(
+                self.states_hidden, tf.cast(self.w_f, tf.float32), transpose_b=True
+            )
 
             print("phi 2 SHAPE: ", self.phi2.get_shape())
 
