@@ -120,7 +120,7 @@ class QNetwork:
                 tf.int32, [None]
             )  # the length of valid positions, because short sesssions need to be padded
 
-            one_hot_input = tf.one_hot(self.inputs, self.item_num + 1)
+            # one_hot_input = tf.one_hot(self.inputs, self.item_num + 1)
             self.input_emb = tf.nn.embedding_lookup(
                 params=self.all_embeddings["state_embeddings"], ids=self.inputs
             )

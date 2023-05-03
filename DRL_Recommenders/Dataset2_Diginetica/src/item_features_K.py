@@ -15,9 +15,12 @@ def create_feature_matrix(
     #             ignore_index=True,
     #         )
 
-    item_features = pd.read_csv(
-        "/Users/kashafali/Documents/Duke/Spring23/RL/Deep_Reinforcement_Learning_Recommenders/DRL_Recommenders/Dataset2_Diginetica/src/item_features/product_cat.csv"
-    )
+    # item_features = pd.read_csv(
+    #     "/Users/kashafali/Documents/Duke/Spring23/RL/Deep_Reinforcement_Learning_Recommenders/DRL_Recommenders/Dataset2_Diginetica/src/item_features/product_cat.csv"
+    # )
+
+    data_path = "Data"
+    item_features = pd.read_csv(os.path.join(data_path, "sorted_events.df"))
 
     item_features = item_features[
         item_features["itemId"].isin(sorted_events["item_id"].unique().tolist())
