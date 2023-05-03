@@ -21,7 +21,7 @@ def create_feature_matrix(
     # )
 
     data_path = "Data"
-    item_features = pd.read_csv(os.path.join(data_path, "sorted_events.df"))
+    item_features = pd.read_csv(os.path.join(data_path, "product_cat.csv"))
 
     item_features = item_features[
         item_features["itemId"].isin(sorted_events["item_id"].unique().tolist())
