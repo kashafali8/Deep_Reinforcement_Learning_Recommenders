@@ -69,7 +69,7 @@ def create_feature_matrix(
         return item_features, item_features["itemId"].unique().tolist()
 
 
-sorted_events = pd.read_pickle("sorted_events.df")
-one_hot_encoded, itemids = create_feature_matrix(
-    sorted_events, n_files=2, path_name="src/item_features/", one_hot_encode=True
-)
+# sorted_events = pd.read_pickle("sorted_events.df")
+# one_hot_encoded, itemids = create_feature_matrix(
+#     sorted_events, n_files=2, path_name="src/item_features/", one_hot_encode=True
+# )
