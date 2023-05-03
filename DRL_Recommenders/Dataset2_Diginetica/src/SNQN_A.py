@@ -17,6 +17,18 @@ from SASRecModules_v2 import *
 import trfl
 from trfl import indexing_ops
 
+import warnings
+
+warnings.filterwarnings("ignore")
+
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
+
+tf.compat.v1.disable_eager_execution()
+
+print(tf.config.list_physical_devices("GPU"))
+print(f"Built with cuda: {tf.test.is_built_with_cuda}")
+print(tf.test.gpu_device_name())
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run nive double q learning.")
