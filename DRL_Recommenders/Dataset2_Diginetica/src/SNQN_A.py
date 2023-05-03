@@ -109,6 +109,7 @@ class QNetwork:
         self.weight = args.weight
         self.model = args.model
         self.is_training = tf.compat.v1.placeholder(tf.bool, shape=())
+        self.lambda_score = 0.5  # modified for item features
         # self.save_file = save_file
         self.name = name
         with tf.compat.v1.variable_scope(self.name):
@@ -305,7 +306,7 @@ class QNetwork:
                 self.states_hidden, self.item_num, activation=None
             )  # all ce logits
 
-            # item features
+            ####### MODIFIED CODE FOR ITEM FEATURES - START #######
 
             print("OUTPUT 2 SHAPE: ", self.output2.get_shape())
             self.phi = self.output2
@@ -321,6 +322,8 @@ class QNetwork:
             self.final_score = (
                 1 - self.lambda_score
             ) * self.phi + self.lambda_score * self.phi2
+
+            ####### MODIFIED CODE FOR ITEM FEATURES - END #######
 
             # TRFL way
             self.actions = tf.compat.v1.placeholder(tf.int32, [None])
