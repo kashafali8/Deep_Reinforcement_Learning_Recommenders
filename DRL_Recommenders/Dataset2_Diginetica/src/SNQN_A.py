@@ -127,7 +127,7 @@ class QNetwork:
             )
 
             self.feature_vector = tf.reduce_mean(
-                input_emb, axis=1
+                self.input_emb, axis=1
             )  ## modified for item features
 
             if self.model == "GRU":
