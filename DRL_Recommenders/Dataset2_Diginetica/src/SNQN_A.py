@@ -311,7 +311,10 @@ class QNetwork:
             self.phi = self.output2
 
             self.w_f = tf.compat.v1.layers.dense(
-                self.inputs, self.hidden_size, use_bias=True, activation=None
+                tf.cast(self.inputs, dtype=tf.float32),
+                self.hidden_size,
+                use_bias=True,
+                activation=None,
             )
             self.phi2 = tf.matmul(self.states_hidden, self.w_f, transpose_b=True)
 
