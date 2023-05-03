@@ -108,6 +108,7 @@ class QNetwork:
         self.weight = args.weight
         self.model = args.model
         self.is_training = tf.compat.v1.placeholder(tf.bool, shape=())
+        self.lambda_score = 0.5  # modified for item features
         # self.save_file = save_file
         self.name = name
         with tf.compat.v1.variable_scope(self.name):
@@ -139,6 +140,10 @@ class QNetwork:
 
                 self.input_emb *= mask
                 self.embedded_chars_expanded = tf.expand_dims(self.input_emb, -1)
+
+                self.feature_vector = tf.reduce_mean(
+                    self.input_emb, axis=1
+                )  ## modified for item features
 
                 # Create a convolution + maxpool layer for each filter size
                 pooled_outputs = []
@@ -308,6 +313,39 @@ class QNetwork:
             )  # activation_fn=None, scope="ce-logits"
             # )  # all ce logits
 
+            ####### MODIFIED CODE FOR ITEM FEATURES - START #######
+
+            print("OUTPUT 2 SHAPE: ", self.output2.get_shape())
+            self.phi = self.output2
+
+            # self.w_f = tf.compat.v1.layers.dense(
+            #     tf.cast(self.inputs, dtype=tf.float32),
+            #     self.hidden_size,
+            #     use_bias=True,
+            #     activation=None,
+            # )
+
+            self.w_f = tf.compat.v1.layers.dense(
+                self.feature_vector,
+                self.hidden_size,
+                use_bias=True,
+                activation=None,
+            )
+
+            print("w_f SHAPE: ", self.w_f.get_shape())
+
+            self.phi2 = tf.matmul(self.states_hidden, self.w_f, transpose_b=True)
+
+            print("phi 2 SHAPE: ", self.phi2.get_shape())
+
+            self.final_score = (
+                1 - self.lambda_score
+            ) * self.phi + self.lambda_score * self.phi2
+
+            print("final score SHAPE: ", self.final_score.get_shape())
+
+            ####### MODIFIED CODE FOR ITEM FEATURES - END #######
+
             # TRFL way
             self.actions = tf.compat.v1.placeholder(tf.int32, [None])
 
@@ -353,8 +391,11 @@ class QNetwork:
                 )[0]
 
             ce_loss = tf.nn.sparse_softmax_cross_entropy_with_logits(
-                labels=self.actions, logits=self.output2
+                labels=self.actions, logits=self.final_score
             )
+
+            # print shape
+            print("ce_loss SHAPE: ", ce_loss.get_shape())
 
             self.loss = tf.reduce_mean(
                 input_tensor=self.weight * (qloss_positive + qloss_negative) + ce_loss
