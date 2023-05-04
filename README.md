@@ -57,11 +57,13 @@ We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) a
 1. NDCG@k is a metric used to evaluate the effectiveness of a recommendation list based on how the top-k items in the list are ranked, with higher ranked items receiving higher scores.
 2. HR@k is a metric that determines if a recommended item is in the top-k positions of the list produced by the model, as compared to the ground-truth item.
 
+We used the SNQN_SASRec Model both with and without item features. The SAS-Rec algorithm allows the model to capture both sequential and user-item features. Overall, the SNQN_SAS-Rec model has been shown to outperform other state-of-the-art recommendation models in terms of recommendation accuracy and computational efficiency.
+
 **1. Results for Retail Rocket Dataset**
 
 
 **2. Results for Diginetica Dataset**
-|SNQN_SAS-Rec Model Results without Item Features|SNQN_SAS-Rec Model Results with Item Features|
+|Results Without Item Features|Results with Item Features|
 |--|--|
 |<table><tr><th>NDCG@10</th><th>HR@10</th></tr><tr><td>0.0198</td><td>0.0377</td></tr></table>|<table><tr><th>NDCG@10</th><th>HR@10</th><th>MRR@10</th><th>MAP@10</th></tr><tr><td>0.0014</td><td>0.0034</td><td>0.0026</td><td>0.0026</td></tr></table>|
 
