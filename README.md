@@ -62,7 +62,7 @@ We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) a
 2. HR@k is a metric that determines if a recommended item is in the top-k positions of the list produced by the model, as compared to the ground-truth item.
 
 **1. Results for Retail Rocket Dataset**
-## fill these with correct values 
+
 **Purchases**
 
 | Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
