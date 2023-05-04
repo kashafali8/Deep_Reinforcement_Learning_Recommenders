@@ -10,7 +10,7 @@ The motivation for this project stems from the importance of personalized produc
 
 **Project Overview:** 
 
-This project aims to implement different session (contextual, sequential) based product recommendation recommenders for the E-commerce use case, and will incorporate item features for cold items. The goal would be to compare the performance of these recommenders on two different dataset, namely Retail Rocket and Diginetica, through two offline evaluation metrics: NDCG@k and HR@k. We will be comparing the performance of a SASRec model to a hRNN (hierarchical RNN) model that also accounts for item features. In this project, we aim to develop effective and efficient product recommendation strategies for E-commerce that can adapt to different types of user sessions and leverage available features for improved performance.
+This project aims to implement different session (contextual, sequential) based product recommendation recommenders for the E-commerce use case, and will incorporate item features for cold items. The goal would be to compare the performance of these recommenders on two different dataset, namely Retail Rocket and Diginetica, through two offline evaluation metrics: NDCG@k and HR@k. We will be comparing the performance of a vanilla SNQN-SASRec model (without item features) with a SNQN-SASRec model that also accounts for item features. In this project, we aim to develop effective and efficient product recommendation strategies for E-commerce that can adapt to different types of user sessions and leverage available features for improved performance.
 
 ## Datasets
 
