@@ -81,11 +81,6 @@ We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) a
 
 ## Folder structure
 
---- Fix this
-
-
-NextItNetModules.py       SASRecModules.py          SNQN_V.py                 item_features_files.ipynb preprocessing_splits.py   utility.py
-README.md                 SNQN_P.py                 item_features_K.py        pop_v1.py                 replay_buffer_v1.py
 ```
 Deep_Reinforcement_Learning_Recommenders
 ├─ DRL_Recommenders
