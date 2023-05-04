@@ -82,8 +82,12 @@ We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) a
 ## Folder structure
 
 --- Fix this
+
+
+NextItNetModules.py       SASRecModules.py          SNQN_V.py                 item_features_files.ipynb preprocessing_splits.py   utility.py
+README.md                 SNQN_P.py                 item_features_K.py        pop_v1.py                 replay_buffer_v1.py
 ```
-recommenders_aipi590
+Deep_Reinforcement_Learning_Recommenders
 ├─ DRL_Recommenders
 │  ├─ Dataset_1_Retail_Rocket
 │  │  ├─ RR_SA2C_Recommender.ipynb
@@ -93,17 +97,21 @@ recommenders_aipi590
 │  │     ├─ SASRecModules_v2.py
 │  │     ├─ gen_replay_buffer.py
 │  │     └─ utility_v2.py
-│  ├─ Dataset_2_Diginetica
-│  │  ├─ HM_SNQN_Recommender.ipynb
-│  │  ├─ HM_data
-│  │  │  └─ README.md
-│  │  ├─ requirements.txt
+│  ├─ Dataset2_Diginetica
+│  │  ├─ Diginetica_SNQN.ipynb
+│  │  ├─ README.md
 │  │  └─ src
-│  │     ├─ NextItNetModules_v2.py
-│  │     ├─ SASRecModules_v2.py
-│  │     ├─ SNQN_v2.py
-│  │     ├─ gen_replay_buffer.py
-│  │     └─ utility_v2.py
+│  │     ├─ NextItNetModules.py
+│  │     ├─ SASRecModules.py
+│  │     ├─ utility.py
+│  │     ├─ pop_v1.py
+│  │     ├─ replay_buffer_v1.py
+│  │     └─ preprocessing_splits.py
+│  │     ├─ SNQN_V.py
+│  │     ├─ SNQN_P.py
+│  │     └─ item_features_files.ipynb
+│  │     └─item_features_K.py 
+│  │     └─README.md 
 │  └─ README.md
 ```
 
