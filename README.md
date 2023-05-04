@@ -65,7 +65,7 @@ We used the SNQN_SASRec Model both with and without item features. The SAS-Rec a
 **2. Results for Diginetica Dataset**
 |Results Without Item Features|Results with Item Features|
 |--|--|
-|<table><tr><th>NDCG@10</th><th>HR@10</th></tr><tr><td>0.0198</td><td>0.0377</td></tr></table>|<table><tr><th>NDCG@10</th><th>HR@10</th><th>MRR@10</th><th>MAP@10</th></tr><tr><td>0.0014</td><td>0.0034</td><td>0.0026</td><td>0.0026</td></tr></table>|
+|<table><tr><th>NDCG@10</th><th>HR@10</th></tr><tr><td>0.0198</td><td>0.0377</td></tr></table>|<table><tr><th>NDCG@10</th><th>HR@10</th></tr><tr><td>0.0014</td><td>0.0034</td><td>0.0026</td><td>0.0026</td></tr></table>|
 
 
 
