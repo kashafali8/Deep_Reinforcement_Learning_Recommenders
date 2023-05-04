@@ -24,9 +24,9 @@ Diginetica is a company that specializes in developing personalized recommendati
 
 ## Methodology
 
-We have created Google Colab Notebooks for running the model both with and without item features for each datasets (Retail Rocket and Diginetica). They contain all the code and corresponding descriptions to reproduce the results.
+We have created Google Colab Notebooks for running the model both with and without item features for each dataset (Retail Rocket and Diginetica). They contain all the code and corresponding descriptions to reproduce the results.
 
-All the required datasets have been stored in the Google Drive (linked here), and the Google Colab notebooks automatically clones our GitHub repository and conducts preprocessing on the datasets before executing modeling and evaluation scripts.
+All the required datasets have been stored in the Google Drive (linked [here](https://drive.google.com/drive/folders/1EOWOzpnCGcaXGhO2oe7NUUMK2Q2Wji1a?usp=sharing)), and the Google Colab notebooks automatically clones our GitHub repository and conducts preprocessing on the datasets before executing modeling and evaluation scripts.
 
 **Data Preprocessing:**
 
@@ -52,12 +52,12 @@ Jupyter notebook at in the DRL_Recommenders directory contains code for both dat
 
 ## Evaluation Metrics & Results
 
+We used the SNQN_SASRec Model both with and without item features. The SAS-Rec algorithm allows the model to capture both sequential and user-item features. Overall, the SNQN_SAS-Rec model has been shown to outperform other state-of-the-art recommendation models in terms of recommendation accuracy and computational efficiency.
+
 We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) and Hit Ratio (HR@k). To ensure consistency in the comparison of results across different DRL models, we report the performance at the highest number of training epochs that we were able to complete, which was approximately 15 epochs.
 
 1. NDCG@k is a metric used to evaluate the effectiveness of a recommendation list based on how the top-k items in the list are ranked, with higher ranked items receiving higher scores.
 2. HR@k is a metric that determines if a recommended item is in the top-k positions of the list produced by the model, as compared to the ground-truth item.
-
-We used the SNQN_SASRec Model both with and without item features. The SAS-Rec algorithm allows the model to capture both sequential and user-item features. Overall, the SNQN_SAS-Rec model has been shown to outperform other state-of-the-art recommendation models in terms of recommendation accuracy and computational efficiency.
 
 **1. Results for Retail Rocket Dataset**
 
@@ -108,9 +108,11 @@ recommenders_aipi590
 ```
 
 ## Contributions:
-Kashaf Ali: Diginetica Dataset SNQN-SASRec (with and without item features) & Source Code Changes
-Pragya Raghuvanshi:
-Pooja Kabber:
+| Name                             | Reference    | Contribution   |
+|-----------------------------------|----------|----------|
+| Kashaf Ali| [Github Profile](https://github.com/kashafali8) | Diginetica Dataset Preprocessing, Executing SNQN-SASRec Models (with and without item features) and Source Code File Changes (SNQN model and item features)|
+| Pragya Raghuvanshi| | |
+| Pooja Kabber | | |
 
 ## References
 
