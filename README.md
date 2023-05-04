@@ -110,9 +110,9 @@ recommenders_aipi590
 ## Contributions:
 | Name                             | Reference    | Contribution   |
 |-----------------------------------|----------|----------|
-| Kashaf Ali| [Github Profile](https://github.com/kashafali8) | Diginetica Dataset Preprocessing, Executing SNQN-SASRec Models (with and without item features) and Source Code File Changes (model and item features)|
-* Pragya Raghuvanshi:
-* Pooja Kabber:
+| Kashaf Ali| [Github Profile](https://github.com/kashafali8) | Diginetica Dataset Preprocessing, Executing SNQN-SASRec Models (with and without item features) and Source Code File Changes (SNQN model and item features)|
+| Pragya Raghuvanshi| | |
+| Pooja Kabber | | |
 
 ## References
 
