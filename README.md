@@ -24,9 +24,9 @@ Diginetica is a company that specializes in developing personalized recommendati
 
 ## Methodology
 
-We have created Google Colab Notebooks for running the model both with and without item features for each datasets (Retail Rocket and Diginetica). They contain all the code and corresponding descriptions to reproduce the results.
+We have created Google Colab Notebooks for running the model both with and without item features for each dataset (Retail Rocket and Diginetica). They contain all the code and corresponding descriptions to reproduce the results.
 
-All the required datasets have been stored in the Google Drive (linked here), and the Google Colab notebooks automatically clones our GitHub repository and conducts preprocessing on the datasets before executing modeling and evaluation scripts.
+All the required datasets have been stored in the Google Drive (linked [here](https://drive.google.com/drive/folders/1EOWOzpnCGcaXGhO2oe7NUUMK2Q2Wji1a?usp=sharing)), and the Google Colab notebooks automatically clones our GitHub repository and conducts preprocessing on the datasets before executing modeling and evaluation scripts.
 
 **Data Preprocessing:**
 
