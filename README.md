@@ -14,9 +14,9 @@ This project aims to implement different session (contextual, sequential) based 
 
 ## Datasets
 
-**Retail Rocket:**
+**1. Retail Rocket:**
 
-**Diginetica Dataset:**
+**2. Diginetica Dataset:**
 
 Diginetica is a company that specializes in developing personalized recommendation systems for E-commerce. They have provided a dataset, called the Diginetica Challenge dataset, which is available on the CodaLab platform. The dataset includes anonymized user interactions with items on an E-commerce website. It consists of two parts: a training set with over 4 million user interactions and a test set with around 1 million interactions. The interactions include views, clicks, and purchases, and cover a variety of item types, including books, movies, and music. In addition to the interaction data, the dataset also includes metadata on each item, such as titles, categories, and descriptions. The goal of the Diginetica Challenge is to develop a personalized recommendation system that can accurately predict user interactions on the test set based on the training data. The challenge provides an opportunity for researchers and data scientists to explore and develop state-of-the-art recommendation algorithms for E-commerce applications. For the purpose of our project, we primarily leverage the view and purchase logs, and also the product_category dataset to build item features.
 
