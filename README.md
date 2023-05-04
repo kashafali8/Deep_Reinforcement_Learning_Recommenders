@@ -15,6 +15,7 @@ This project aims to implement different session (contextual, sequential) based 
 ## Datasets
 
 **1. Retail Rocket:**
+
 Retail Rocket is an organization that creates customized product suggestions for online shopping websites and performs customer segmentation based on various factors, including user interests. The dataset was obtained from an actual e-commerce website and consisted of unprocessed data, meaning that it was not altered in any way. However, all data points were hashed to protect confidentiality. In this project, only the behavior data file (events.csv) was used, which contains a timestamped log of various events, such as clicks, add-to-cart actions, and transactions. These events represent different interactions made by visitors to the e-commerce website over a 4.5-month period, totaling 2,756,101 events produced by 1,407,580 distinct visitors. Additionally, the item_features_x.csv dataset was used to extract features of each item, which includes information about their properties and respective values.
 
 **2. Diginetica Dataset:**
@@ -61,6 +62,20 @@ We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) a
 2. HR@k is a metric that determines if a recommended item is in the top-k positions of the list produced by the model, as compared to the ground-truth item.
 
 **1. Results for Retail Rocket Dataset**
+## fill these with correct values 
+**Purchases**
+
+| Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
+|-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
+| SNQN-SASRec without item Features | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.001044 | 0.000246 | 
+| SNQN-SASRec with item Features    | 0.120042 | 0.081328 | 0.160752 | 0.094191 | 0.191023 | 0.102181 | 0.208768 | 0.106387 |
+
+**Clicks**
+
+| Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
+|-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
+| SNQN-SASRec without item Features | 0.000108 | 0.000068 | 0.000378 | 0.000153 | 0.000649 | 0.000226 | 0.000784 | 0.000258 | 
+| SNQN-SASRec with item Features    | 0.113090 | 0.081594 | 0.160067 | 0.096746 | 0.192205 | 0.105245 | 0.217099 | 0.111118 | 
 
 
 **2. Results for Diginetica Dataset**
