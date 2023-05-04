@@ -106,13 +106,14 @@ Deep_Reinforcement_Learning_Recommenders
 │  │     ├─ utility.py
 │  │     ├─ pop_v1.py
 │  │     ├─ replay_buffer_v1.py
-│  │     └─ preprocessing_splits.py
+│  │     ├─ preprocessing_splits.py
 │  │     ├─ SNQN_V.py
 │  │     ├─ SNQN_P.py
-│  │     └─ item_features_files.ipynb
-│  │     └─item_features_K.py 
-│  │     └─README.md 
-│  └─ README.md
+│  │     ├─ item_features_files.ipynb
+│  │     ├─item_features_K.py 
+│  │     ├─README.md 
+│  └─ Source_Code_Implementation.ipynb
+├─ README.md
 ```
 
 ## Contributions:
