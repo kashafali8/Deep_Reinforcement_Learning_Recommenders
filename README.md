@@ -63,11 +63,23 @@ We used the SNQN_SASRec Model both with and without item features. The SAS-Rec a
 
 
 **2. Results for Diginetica Dataset**
-|Results Without Item Features|Results with Item Features|
-|--|--|
-|<table><tr><th>NDCG@10</th><th>HR@10</th></tr><tr><td>0.0198</td><td>0.0377</td></tr></table>|<table><tr><th>NDCG@10</th><th>HR@10</th></tr><tr><td>0.0014</td><td>0.0034</td><td>0.0026</td><td>0.0026</td></tr></table>|
+
+**Purchase**
+
+| Model                  | HR@5   | NDCG@5 | HR@10 | NDCG@10 | HR@15 | NDCG@15 | HR@20 | NDCG@20 |
+|------------------------|--------|--------|-------|---------|-------|---------|-------|-------- |
+| with item Features     | 0.1925 | 0.1435 | 0.2437 | 0.1601 | 0.2721 | 0.1676 | 0.2920 | 0.1723 |
+| without item Features  | 0.2237 | 0.1731 | 0.2672 | 0.1872 | 0.2929 | 0.1940 | 0.3118 | 0.1985 |
+
+**Clicks**
+
+| Model                  | HR@5   | NG@5   | HR@10 | NG@10 | HR@15 | NG@15 | HR@20 | NG@20 |
+|------------------------|--------|--------|------|------|-------|-------|-------|-------|
+| with item Features     | 0.1925 | 0.1435 | 0.2437 | 0.1601 | 0.2721 | 0.1676 | 0.2920 | 0.1723|
+| without item Features  | 0.2237 | 0.1731 | 0.2672 | 0.1872 | 0.2929 | 0.1940 | 0.3118 | 0.1985|
 
 
+## Folder structure
 
 
 
