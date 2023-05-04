@@ -16,7 +16,9 @@ This project aims to implement different session (contextual, sequential) based 
 
 **1. Retail Rocket:**
 
-Retail Rocket is an organization that creates customized product suggestions for online shopping websites and performs customer segmentation based on various factors, including user interests. The dataset was obtained from an actual e-commerce website and consisted of unprocessed data, meaning that it was not altered in any way. However, all data points were hashed to protect confidentiality. In this project, only the behavior data file (events.csv) was used, which contains a timestamped log of various events, such as clicks, add-to-cart actions, and transactions. These events represent different interactions made by visitors to the e-commerce website over a 4.5-month period, totaling 2,756,101 events produced by 1,407,580 distinct visitors. Additionally, the item_features_x.csv dataset was used to extract features of each item, which includes information about their properties and respective values.
+Retail Rocket is an organization that creates customized product suggestions for online shopping websites and performs customer segmentation based on various factors, including user interests. The dataset was obtained from an actual e-commerce website and consisted of unprocessed data, meaning that it was not altered in any way. However, all data points were hashed to protect confidentiality. In this project, only the behavior data file (`events.csv`) was used, which contains a timestamped log of various events, such as clicks, add-to-cart actions, and transactions. These events represent different interactions made by visitors to the e-commerce website over a 4.5-month period, totaling 2,756,101 events produced by 1,407,580 distinct visitors. Additionally, the `item_features_x.csv` dataset was used to extract features of each item, which includes information about their properties and respective values.
+
+Downlooad [here](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset)
 
 **2. Diginetica Dataset:**
 
