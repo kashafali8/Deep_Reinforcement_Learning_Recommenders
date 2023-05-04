@@ -108,7 +108,7 @@ recommenders_aipi590
 ```
 
 ## Contributions:
-Kashaf Ali: Diginetica Dataset SNQN-SASRec (with and without item features) & Source Code Changes
+Kashaf Ali: Diginetica Dataset Preprocessing, Executing SNQN-SASRec Models (with and without item features) and Source Code File Changes (model and item features)
 Pragya Raghuvanshi:
 Pooja Kabber:
 
