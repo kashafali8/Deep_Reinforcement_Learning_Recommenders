@@ -68,18 +68,49 @@ We used the SNQN_SASRec Model both with and without item features. The SAS-Rec a
 
 | Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
 |-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
-| SNQN-SASRec without item Features | 0.113090 | 0.081594 | 0.160067 | 0.096746 | 0.192205 | 0.105245 | 0.217099 | 0.111118 | 
+| SNQN-SASRec without item Features | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.000000 | 0.001044 | 0.000246 | 
 | SNQN-SASRec with item Features    | 0.120042 | 0.081328 | 0.160752 | 0.094191 | 0.191023 | 0.102181 | 0.208768 | 0.106387 |
 
 **Clicks**
 
-| Model                             | HR@5   | NDCG@5 | HR@10 | NDCG@10 | HR@15 | NDCG@15 | HR@20 | NDCG@20 |
-|-----------------------------------|--------|--------|-------|---------|-------|---------|-------|-------- |
-| SNQN-SASRec with item Features    | 0.1925 | 0.1435 | 0.2437 | 0.1601 | 0.2721 | 0.1676 | 0.2920 | 0.1723 |
-| SNQN-SASRec without item Features | 0.2237 | 0.1731 | 0.2672 | 0.1872 | 0.2929 | 0.1940 | 0.3118 | 0.1985 |
+| Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
+|-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
+| SNQN-SASRec without item Features | 0.000108 | 0.000068 | 0.000378 | 0.000153 | 0.000649 | 0.000226 | 0.000784 | 0.000258 | 
+| SNQN-SASRec with item Features    | 0.113090 | 0.081594 | 0.160067 | 0.096746 | 0.192205 | 0.105245 | 0.217099 | 0.111118 | 
 
 
 ## Folder structure
 
+--- Fix this
+```
+recommenders_aipi590
+├─ DRL_Recommenders
+│  ├─ Dataset_1_Retail_Rocket
+│  │  ├─ RR_SA2C_Recommender.ipynb
+│  │  └─ src
+│  │     ├─ NextItNetModules_v2.py
+│  │     ├─ SA2C_v2.py
+│  │     ├─ SASRecModules_v2.py
+│  │     ├─ gen_replay_buffer.py
+│  │     └─ utility_v2.py
+│  ├─ Dataset_2_Diginetica
+│  │  ├─ HM_SNQN_Recommender.ipynb
+│  │  ├─ HM_data
+│  │  │  └─ README.md
+│  │  ├─ requirements.txt
+│  │  └─ src
+│  │     ├─ NextItNetModules_v2.py
+│  │     ├─ SASRecModules_v2.py
+│  │     ├─ SNQN_v2.py
+│  │     ├─ gen_replay_buffer.py
+│  │     └─ utility_v2.py
+│  └─ README.md
+```
 
+## Contributions:
+Kashaf Ali: Diginetica Dataset SNQN-SASRec (with and without item features) & Source Code Changes
+Pragya Raghuvanshi:
+Pooja Kabber:
+
+## References
 
