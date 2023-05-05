@@ -32,6 +32,8 @@ We have created Google Colab Notebooks for running the model both with and witho
 
 All the required datasets have been stored in the Google Drive (linked [here](https://drive.google.com/drive/folders/1EOWOzpnCGcaXGhO2oe7NUUMK2Q2Wji1a?usp=sharing)), and the Google Colab notebooks automatically clones our GitHub repository and conducts preprocessing on the datasets before executing modeling and evaluation scripts.
 
+We also conducted a non Deep Reinforcement Learning model for Retail Rocket dataset to observe how our metrics would change in comparison to RL recommender.
+
 **Data Preprocessing:**
 
 We conducted the following data preprocessing for both our datasets prior to running them through the model:
