@@ -165,8 +165,8 @@ Deep_Reinforcement_Learning_Recommenders
 | Name                             | Reference    | Contribution   |
 |-----------------------------------|----------|----------|
 | Kashaf Ali| [Github Profile](https://github.com/kashafali8) | Diginetica Dataset Preprocessing, Executing SNQN-SASRec Models (with and without item features) and Source Code File Changes (SNQN model and item features)|
-| Pragya Raghuvanshi|  |  Preprocessing of RetailRocket Data,  Executing SNQN-SASRec Models (with and without item features) for RR data, Executing Non-RL Models (with and without item features) for RR data|
-| Pooja Kabber | | Source Code Modification (SNQN model and item features) & Executing SNQN-SASRec Models (with and without item features) for RR data, Executing Non-RL Models (with and without item features) for RR data|
+| Pragya Raghuvanshi| [Github Profile](https://github.com/pr-124) |  Preprocessing of RetailRocket Data,  Executing SNQN-SASRec Models (with and without item features) for RR data, Executing Non-RL Models (with and without item features) for RR data|
+| Pooja Kabber | [Github Profile](https://github.com/poojakabber7)| Source Code Modification (SNQN model and item features) & Executing SNQN-SASRec Models (with and without item features) for RR data, Executing Non-RL Models (with and without item features) for RR data|
 
 ## References
 
