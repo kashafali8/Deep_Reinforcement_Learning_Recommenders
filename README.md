@@ -157,7 +157,9 @@ Deep_Reinforcement_Learning_Recommenders
 │  │     ├─ item_features_files.ipynb
 │  │     ├─item_features_K.py 
 │  │     ├─README.md 
+|  |
 │  └─ Source_Code_Implementation.ipynb
+|-Non DRL Recommender
 ├─ README.md
 ```
 
