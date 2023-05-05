@@ -97,6 +97,17 @@ We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) a
 | SNQN-SASRec with item Features    | 0.113090 | 0.081594 | 0.160067 | 0.096746 | 0.192205 | 0.105245 | 0.217099 | 0.111118 | 
 
 
+
+## Limitation and Future Scope 
+
+1. Exploring different item features or exploring other ways of incorporating item features into the model to make it more informative to improve the quality of the recommendations. 
+
+2. Performing hyperparamneter tuning on different mdoel architecture to see if it improves the performance.
+
+3. Incorporating other metrics like RRK, MRP and MAP can help us betetr evaluate the performance of the recommender system.
+
+
+
 ## Folder structure
 
 ```
@@ -137,4 +148,8 @@ Deep_Reinforcement_Learning_Recommenders
 | Pooja Kabber | | Source Code Modification (SNQN model and item features) & Executing SNQN-SASRec Models (with and without item features) for RR data|
 
 ## References
+
+1. Supervised Advantage Actor-Critic for Recommender Systems | X. Xin, A. Karatzoglou, I. Arapakis, and J. M. Jose, Proceedings of ACM Conference (Conference’17), 2021.
+
+2. Xin, Xin, et al. "Self-supervised reinforcement learning for recommender systems." Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval. 2020.
 
