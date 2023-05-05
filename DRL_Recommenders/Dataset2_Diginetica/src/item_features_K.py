@@ -1,59 +1,41 @@
+"""Script to create item feature matrix."""
 import pandas as pd
-
 import numpy as np
 import os
 
 
-def create_feature_matrix(
+def create_features(
     sorted_events, n_files=2, path_name="", one_hot_encode=True, top_features=500
 ):
-    # for i in range(n_files):
-    #     if i == 0:
-    #         item_features = pd.read_csv(path_name + str(i + 1) + ".csv")
-    #     else:
-    #         item_features = pd.concat(
-    #             [item_features, pd.read_csv(path_name + str(i + 1) + ".csv")],
-    #             ignore_index=True,
-    #         )
-
-    # item_features = pd.read_csv(
-    #     "/Users/kashafali/Documents/Duke/Spring23/RL/Deep_Reinforcement_Learning_Recommenders/DRL_Recommenders/Dataset2_Diginetica/src/item_features/product_cat.csv"
-    # )
+    """Create item feature matrix."""
 
     data_path = "Data"
-    item_features = pd.read_csv(os.path.join(data_path, "product_cat.csv"))
+    features_item = pd.read_csv(os.path.join(data_path, "product_cat.csv"))
 
-    item_features = item_features[
-        item_features["itemId"].isin(sorted_events["item_id"].unique().tolist())
+    features_item = features_item[
+        features_item["itemId"].isin(sorted_events["item_id"].unique().tolist())
     ].drop_duplicates()
-    # item_features["property_value"] = (
-    #     item_features["property"].str.strip() + item_features["value"].str.strip()
-    # )
-    # item_features = item_features.drop(["timestamp"], axis=1).drop_duplicates()
-
     if one_hot_encode:
         one_hot_encoded = pd.DataFrame()
         itemids = []
 
-        event_item_list = sorted_events.item_id.unique()
-        event_item_list.sort()
-        item_list = item_features["itemId"].unique()
+        event_list = sorted_events.item_id.unique()
+        event_list.sort()
+        item_list = features_item["itemId"].unique()
         properties = (
-            item_features["categoryId"].value_counts().head(top_features).index.tolist()
+            features_item["categoryId"].value_counts().head(top_features).index.tolist()
         )
 
-        for item in event_item_list:
-            if len(itemids) % 1000 == 0:
-                print("hi")
-            if item not in item_list:
+        for i in event_list:
+            if j not in item_list:
                 one_hot_encoded = pd.concat(
                     [one_hot_encoded, pd.DataFrame(np.zeros(len(properties))).T],
                     ignore_index=True,
                 )
-                itemids.append(item)
+                itemids.append(j)
                 continue
 
-            item_properties = item_features[item_features["itemId"] == item][
+            item_properties = features_item[features_item["itemId"] == i][
                 "categoryId"
             ].unique()
             one_hot_encoded = pd.concat(
@@ -65,15 +47,15 @@ def create_feature_matrix(
                 ],
                 ignore_index=True,
             )
-            itemids.append(item)
+            itemids.append(i)
 
         return one_hot_encoded, itemids
 
     else:
-        return item_features, item_features["itemId"].unique().tolist()
+        return features_item, features_item["itemId"].unique().tolist()
 
 
 # sorted_events = pd.read_pickle("sorted_events.df")
-# one_hot_encoded, itemids = create_feature_matrix(
+# one_hot_encoded, itemids = create_features(
 #     sorted_events, n_files=2, path_name="src/item_features/", one_hot_encode=True
 # )
