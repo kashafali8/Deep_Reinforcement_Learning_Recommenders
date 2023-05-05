@@ -99,6 +99,8 @@ From the above results we can see that there is approximately 25% increase in th
 | SNQN-SASRec without item Features | 0.000108 | 0.000068 | 0.000378 | 0.000153 | 0.000649 | 0.000226 | 0.000784 | 0.000258 | 
 | SNQN-SASRec with item Features    | 0.113090 | 0.081594 | 0.160067 | 0.096746 | 0.192205 | 0.105245 | 0.217099 | 0.111118 |
 
+From the above analysis we can see that the item features addition increases the metrics significantly indicating a notable improvement in the recommmendation by adding the item features. 
+
 
 
 **3. Results for Retail Rocket Dataset for Non-RL Model**
