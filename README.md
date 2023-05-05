@@ -36,7 +36,7 @@ All the required datasets have been stored in the Google Drive (linked [here](ht
 
 We conducted the following data preprocessing for both our datasets prior to running them through the model:
 
-1. Retail Rocket:
+1. Retail Rocket: The preprocessing steps include removing transactions, removing users and items with few interactions, and transforming item IDs, session IDs, and behavior types to integers using LabelEncoder. The training, validation, and test sets are split using a 80-10-10 split. The item popularity is calculated and stored in a dictionary, and the replay buffer is generated from the training set by padding or trimming a user's interaction history to a maximum length.
 
 2. Diginetica: we used the train-item-views.csv for views and train-purchases.csv datasets for purchases for our model, and product_cat dataset for product category information for creating our one-hot-encodings for item features. Our SNQN model also needs data on user interactions such as clicks or views, as well as purchases or adding items to the cart. Although both types of interactions are positive, we consider clicks as negative signals and purchases as positive signals, and only positive signals are used to affect the user state in the model. We also used publicly available code by Xin Xin et al. (including the replay_buffer.py and pop.py files for preprocessing the data). We also preprocessed our datasets by assigning is_buy flags to indicate whether a user had made a purchase, and we excluded users with fewer than three interactions from the analysis.
 
@@ -69,15 +69,18 @@ We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) a
 
 | Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
 |-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
-| SNQN-SASRec without item Features | 0.005020 | 0.003781 | 0.008247 | 0.004806 |0.010936 | 0.005517 | 0.012729 |0.005934| 
-| SNQN-SASRec with item Features    |0.003227 | 0.002007 | 0.005737 | 0.002827 | 0.008426 | 0.003529| 0.010039 | 0.003909 |
+| SNQN-SASRec without item Features | 0.003586 | 0.002537 | 0.006275 | 0.003390 |0.007709| 0.003763 | 0.009143 |0.004102| 
+| SNQN-SASRec with item Features    |0.005020 | 0.003653| 0.008247 | 0.004669| 0.009860 | 0.005093| 0.010577 | 0.005263 |
 
 **Clicks**
 
 | Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
 |-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
-| SNQN-SASRec without item Features |0.001188 | 0.000844|   0.001872 | 0.001060 | 0.002436 | 0.001210 | 0.002837 | 0.001304| 
-| SNQN-SASRec with item Features    |  0.000889 |0.000593 |0.001572 | 0.000811 |  0.002188 | 0.000971 |  0.002632| 0.001076 | 
+| SNQN-SASRec without item Features |0.001068 | 0.000695|   0.001752 | 0.000918 |0.002384| 0.001085 | 0.002820 | 0.001187| 
+| SNQN-SASRec with item Features    | 0.001376 |0.001023 |0.002119| 0.001262 |  0.002743 |0.001428 |  0.003299| 0.001560 | 
+
+
+From the above results we can see that there is approximately 25% increase in the Purchases for HR and approximately 30% increase in the NDCG mertics when we considered item features as compared to when we don't consider item features. We can also see that for clicks too, there is an approximate increase of 20% for HR and 30 %for NDCG, after taking item features in consideration.
 
 
 **2. Results for Diginetica Dataset**
@@ -94,7 +97,9 @@ We used two evaluation metrics: Normalized Discounted Cumulative Gain (NDCG@k) a
 | Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
 |-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
 | SNQN-SASRec without item Features | 0.000108 | 0.000068 | 0.000378 | 0.000153 | 0.000649 | 0.000226 | 0.000784 | 0.000258 | 
-| SNQN-SASRec with item Features    | 0.113090 | 0.081594 | 0.160067 | 0.096746 | 0.192205 | 0.105245 | 0.217099 | 0.111118 | 
+| SNQN-SASRec with item Features    | 0.113090 | 0.081594 | 0.160067 | 0.096746 | 0.192205 | 0.105245 | 0.217099 | 0.111118 |
+
+From the above analysis we can see
 
 
 
