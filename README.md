@@ -99,7 +99,7 @@ From the above results we can see that there is approximately 25% increase in th
 | SNQN-SASRec without item Features | 0.000108 | 0.000068 | 0.000378 | 0.000153 | 0.000649 | 0.000226 | 0.000784 | 0.000258 | 
 | SNQN-SASRec with item Features    | 0.113090 | 0.081594 | 0.160067 | 0.096746 | 0.192205 | 0.105245 | 0.217099 | 0.111118 |
 
-From the above analysis we can see
+
 
 **3. Results for Retail Rocket Dataset for Non-RL Model**
 
@@ -107,15 +107,17 @@ From the above analysis we can see
 
 | Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
 |-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
-| Non-RL without item Features | 0.003586 | 0.002537 | 0.006275 | 0.003390 |0.007709| 0.003763 | 0.009143 |0.004102| 
-| Non-RL with item Features    |0.005020 | 0.003653| 0.008247 | 0.004669| 0.009860 | 0.005093| 0.010577 | 0.005263 |
+| Non-RL without item Features | 0.000000 | 0.000000 | 0.000000 | 0.000000 |0.000000| 00.000000 |0.000000 |0.0000002| 
+| Non-RL with item Features    |0.000000 | 0.000000| 0.000000 | 0.000000| 0.000179 | 0.000050|0.000179 | 0.000050 |
 
 **Clicks**
 
 | Model                             | HR@5     | NDCG@5   | HR@10    | NDCG@10  | HR@15    | NDCG@15 | HR@20   | NDCG@20   |
 |-----------------------------------|----------|----------|----------|----------|----------|---------|---------|------------|
-| Non-RL without item Features |0.001068 | 0.000695|   0.001752 | 0.000918 |0.002384| 0.001085 | 0.002820 | 0.001187| 
-| Non-RL with item Features    | 0.001376 |0.001023 |0.002119| 0.001262 |  0.002743 |0.001428 |  0.003299| 0.001560 | 
+| Non-RL without item Features |0.000051 |0.000033|   0.000103 | 0.000050 |0.000137| 0.000059 | 0.000205 | 0.000075| 
+| Non-RL with item Features    | 0.000017 | 0.000007 |0.000077| 0.000025 |  0.000111 |0.000034 |  0.000188| 0.000052 | 
+
+When comparing the non RL with and without item features we can see an increase in the metrics for purchases but decrease in clicks after including item features. However , if we compare the metrics for  Non-RL with item Features  and RL with item features we can see that there is a significant increase in the metrics of about 50%.
 
 ## Limitation and Future Scope 
 
