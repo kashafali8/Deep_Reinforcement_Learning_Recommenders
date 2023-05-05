@@ -76,7 +76,7 @@ class QNetwork:
 
             data_sorted = ""
             one_hot_encoded = pd.read_pickle(
-                os.path.join(data_sorted, "/content/Deep_Reinforcement_Learning_Recommenders/DRL_Recommenders/Dataset_RR/data/one_hot_encoded.df")
+                os.path.join(data_sorted, "/content/Deep_Reinforcement_Learning_Recommenders/Non DRL Recommenders/Dataset1_RetailRocket/data/one_hot_encoded.df")
             )
 
             one_hot_encoded = tf.convert_to_tensor(one_hot_encoded)
